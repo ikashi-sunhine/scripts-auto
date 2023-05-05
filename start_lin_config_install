@@ -1,0 +1,122 @@
+echo '#!/bin/bash
+#UPGRADE SUPER FAST PC 
+ apt update -y
+ apt full-upgrade -y
+###
+#NANO NUMBER SUKO
+ sed -i "72 s/.*/set linenumbers/g" /etc/nanorc
+#
+#NAME MY PC
+ echo "NAME PC ? : "
+ read name_pc
+ echo "OK, name_pc $name_pc"
+ hostnamectl set-hostname $name_pc
+###
+#SINHRON TIME WITH SERVER
+ apt install ntpdate -y
+ ntpdate ntp1.stratum2.ru
+###
+#SSH INSTALL
+ apt-get install ssh -y
+   sed -i "15 s/.*/Port 40/g" /etc/ssh/sshd_config
+   sed -i "34 s/.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
+   ssh-keygen -t rsa -b 4096
+   echo "login ssh connect; task lulu@? : "
+   read ssh_login
+   echo "Put ssh key; must have NAME pc or ip address? : "
+   read ssh_connect
+   ssh-copy-id $ssh_login@$ssh_connect
+###
+#CHANGE IP
+ cat /etc/network/interfaces
+  echo "CHANGE IP ??? (N=DHCP) (y/N) : "
+  read change_ip
+case "$change_ip" in
+    y|Y) echo "SUKO"
+         rm /etc/network/interfaces
+         echo "source /etc/network/interfaces.d/*">/etc/network/interfaces
+         echo "#####">>/etc/network/interfaces
+         echo "auto lo">>/etc/network/interfaces
+         echo "iface lo inet loopback">>/etc/network/interfaces
+          ip link
+          echo  "CHANGE INTERFACE? task eth1,eth2 : "
+          read interface
+         echo "auto $interface">>/etc/network/interfaces
+         echo "iface $interface inet static">>/etc/network/interfaces
+          echo "CHANGE ADRESS INTERFACE? task 192.168.1.25 : "
+          read address
+           echo "CHANGE MASK ADDRESS : "
+           echo "n(1)-9
+n(2)-10
+n(3)-11
+n(4)-12
+n(5)-13
+n(6)-14
+n(7)-15
+n(8)-16
+n(9)-17
+n(10)-18
+n(11)-19
+n(12)-20
+n(13)-21
+n(14)-22
+n(15)-23
+n(16)-24
+n(17)-25
+n(18)-26
+n(19)-27
+n(20)-28
+n(21)-29
+n(22)-30"
+           read mask
+            case "$mask" in
+            "1" )echo "address $address/9">>/etc/network/interfaces;;
+            "2" )echo "address $address/10">>/etc/network/interfaces;;
+            "3" )echo "address $address/11">>/etc/network/interfaces;;
+            "4" )echo "address $address/12">>/etc/network/interfaces;;
+            "5" )echo "address $address/13">>/etc/network/interfaces;;
+            "6" )echo "address $address/14">>/etc/network/interfaces;;
+            "7" )echo "address $address/15">>/etc/network/interfaces;;
+            "8" )echo "address $address/16">>/etc/network/interfaces;;
+            "9" )echo "address $address/17">>/etc/network/interfaces;;
+            "10" )echo "address $address/18">>/etc/network/interfaces;;
+            "11" )echo "address $address/19">>/etc/network/interfaces;;
+            "12" )echo "address $address/20">>/etc/network/interfaces;;
+            "13" )echo "address $address/21">>/etc/network/interfaces;;
+            "14" )echo "address $address/22">>/etc/network/interfaces;;
+            "15" )echo "address $address/23">>/etc/network/interfaces;;
+            "16" )echo "address $address/24">>/etc/network/interfaces;;
+            "17" )echo "address $address/25">>/etc/network/interfaces;;
+            "18" )echo "address $address/26">>/etc/network/interfaces;;
+            "19" )echo "address $address/27">>/etc/network/interfaces;;
+            "20" )echo "address $address/28">>/etc/network/interfaces;;
+            "21" )echo "address $address/29">>/etc/network/interfaces;;
+            "22" )echo "address $address/30">>/etc/network/interfaces;;
+           esac
+            echo "DEFAULT GATEWAY? task 192.168.1.1 : "
+            read default_gateway
+            echo "gateway $default_gateway">>/etc/network/interfaces
+             echo -e "SKOLKO DNSservers 1 OR 2: "
+             read dns
+              case "$dns" in
+              "1" )echo -e "Dns?\ntask 8.8.8.8:\n "
+                read dns_server
+                echo "dns-nameservers $dns_server ">>/etc/network/interfaces;;
+              "2" )echo -e "Dns?\ntask 8.8.8.8 2.2.2.2\nDNSserver №1: "
+                read dns_servers1
+                echo -e "DNSserver №2: "
+                read dns_servers2
+                echo "dns-nameservers $dns_servers1 $dns_servers2">>/etc/network/interfaces;;
+                esac
+        ;;
+    n|N) echo "GOOD_MAN"
+         echo "DHCP_)))"
+      
+        ;;
+    *) echo "chil"
+        ;;
+esac
+#systemctl restart networking.service  
+'>/root/start_lin_config_install.sh
+bash /root/start_lin_config_install.sh
+rm /root/start_lin_config_install.sh
